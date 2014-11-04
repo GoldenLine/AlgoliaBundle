@@ -1,0 +1,21 @@
+{
+    "name": "goldenline/algolia-bundle",
+    "description": "Integrates Algolia into Symfony",
+    "keywords": ["algolia"],
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sebastian Grodzicki",
+            "email": "sebastian@grodzicki.pl"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "symfony/framework-bundle": "~2.3",
+        "algolia/algoliasearch-client-php": "~1.4"
+    },
+    "autoload": {
+        "psr-4": {"Goldenline\\AlgoliaBundle\\": ""}
+    }
+}
