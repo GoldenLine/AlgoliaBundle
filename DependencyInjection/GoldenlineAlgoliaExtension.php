@@ -1,13 +1,13 @@
 <?php
 
-namespace Goldenline\AlgoliaBundle\DependencyInjection;
+namespace GoldenLine\AlgoliaBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
-class GoldenlineAlgoliaExtension extends Extension
+class GoldenLineAlgoliaExtension extends Extension
 {
     /**
      * {@inheritDoc}

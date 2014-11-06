@@ -1,6 +1,6 @@
 <?php
 
-namespace Goldenline\AlgoliaBundle\DependencyInjection;
+namespace GoldenLine\AlgoliaBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
