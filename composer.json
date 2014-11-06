@@ -19,6 +19,6 @@
         "phpunit/phpunit": "4.3.*"
     },
     "autoload": {
-        "psr-4": {"GoldenLine\\AlgoliaBundle\\": ""}
+        "psr-4": {"Goldenline\\AlgoliaBundle\\": ""}
     }
 }

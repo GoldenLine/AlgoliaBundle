@@ -1,9 +1,9 @@
 <?php
 
-namespace GoldenLine\AlgoliaBundle;
+namespace Goldenline\AlgoliaBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class GoldenLineAlgoliaBundle extends Bundle
+class GoldenlineAlgoliaBundle extends Bundle
 {
 }
