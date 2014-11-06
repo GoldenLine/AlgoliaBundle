@@ -13,7 +13,26 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('goldenline_algolia');
+        $rootNode = $treeBuilder->root('golden_line_algolia');
+
+        $rootNode
+            ->children()
+                ->arrayNode('credentials')
+                    ->isRequired()
+                    ->children()
+                        ->scalarNode('application_id')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                        ->end()
+                        ->scalarNode('search_key')
+                            ->isRequired()
+                            ->cannotBeEmpty()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
+
 
         return $treeBuilder;
     }
