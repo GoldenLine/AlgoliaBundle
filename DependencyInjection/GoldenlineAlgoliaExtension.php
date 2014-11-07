@@ -4,7 +4,7 @@ namespace Goldenline\AlgoliaBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
@@ -22,58 +22,41 @@ class GoldenlineAlgoliaExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
-        $this->createAlgoliaClient($container, $config);
+        $this->loadClient($config['client'], $container);
 
         if (isset($config['indices'])) {
-            $this->createAlgoliaIndices($container, $config['indices']);
+            $this->loadIndices($config['indices'], $container);
         }
     }
 
     /**
-     * @param $config
+     * @param array $client application credentials
      * @param ContainerBuilder $container
-     * @throws \RuntimeException
-     * @throws \InvalidArgumentException
      */
-    private function createAlgoliaClient(ContainerBuilder $container, $config)
+    private function loadClient(array $client, ContainerBuilder $container)
     {
-        if (!class_exists('AlgoliaSearch\Client')) {
-            throw new \RuntimeException(
-                'You must require "algolia/algoliasearch-client-php" to use the Algolia Bundle.'
-            );
-        }
+        $clientDef = new DefinitionDecorator('goldenline_algolia.client_prototype');
+        $clientDef->replaceArgument(0, $client['application_id']);
+        $clientDef->replaceArgument(1, $client['application_key']);
+        $clientDef->replaceArgument(2, $client['hosts']);
 
-        $algoliaClient = new Definition('AlgoliaSearch\Client');
-        $algoliaClient->addArgument($config['credentials']['application_id']);
-        $algoliaClient->addArgument($config['credentials']['search_key']);
-        if (isset($config['credentials']['hosts'])) {
-            $algoliaClient->addArgument($config['credentials']['hosts']);
-        }
-
-        $container->setDefinition('goldenline.algolia.client', $algoliaClient);
+        $container->setDefinition('goldenline_algolia.client', $clientDef);
     }
 
     /**
+     * @param array $indices array of indices names
      * @param ContainerBuilder $container
-     * @param array $indices
-     * @throws \RuntimeException
      */
-    private function createAlgoliaIndices(ContainerBuilder $container, array $indices)
+    private function loadIndices(array $indices, ContainerBuilder $container)
     {
-        if (!class_exists('AlgoliaSearch\Index')) {
-            throw new \RuntimeException(
-                'You must require "algolia/algoliasearch-client-php" to use the Algolia Bundle.'
-            );
-        }
-
         foreach ($indices as $index) {
-            $algoliaIndex = new Definition('AlgoliaSearch\Index');
-            $algoliaIndex->setFactoryClass('Goldenline\AlgoliaBundle\DependencyInjection\AlgoliaIndexFactory');
-            $algoliaIndex->setFactoryMethod('create');
-            $algoliaIndex->addArgument(new Reference('goldenline.algolia.client'));
-            $algoliaIndex->addArgument($index);
+            $indexDef = new DefinitionDecorator('goldenline_algolia.index_prototype');
+            $indexDef->replaceArgument(0, new Reference('goldenline_algolia.client'));
+            $indexDef->replaceArgument(1, $index);
 
-            $container->setDefinition(sprintf('goldenline.algolia.index.%s', $index), $algoliaIndex);
+            $indexId = sprintf('goldenline_algolia.index.%s', $index);
+
+            $container->setDefinition($indexId, $indexDef);
         }
     }
 }

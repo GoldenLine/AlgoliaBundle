@@ -1,3 +1,3 @@
 goldenline_algolia:
-    credentials:
-        search_key: q32ew
+    client:
+        application_key: q32ew

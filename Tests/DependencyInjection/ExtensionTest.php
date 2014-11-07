@@ -22,18 +22,19 @@ class ExtensionTest extends AbstractExtensionTestCase
     public function testExtensionAfterLoading()
     {
         $this->load();
-        $this->assertContainerBuilderHasService('goldenline.algolia.client', 'AlgoliaSearch\Client');
-        $this->assertContainerBuilderHasService('goldenline.algolia.index.foo', 'AlgoliaSearch\Index');
-        $this->assertContainerBuilderHasService('goldenline.algolia.index.bar', 'AlgoliaSearch\Index');
-        $this->assertContainerBuilderHasService('goldenline.algolia.index.users', 'AlgoliaSearch\Index');
+
+        $this->assertContainerBuilderHasService('goldenline_algolia.client');
+        $this->assertContainerBuilderHasService('goldenline_algolia.index.foo');
+        $this->assertContainerBuilderHasService('goldenline_algolia.index.bar');
+        $this->assertContainerBuilderHasService('goldenline_algolia.index.users');
     }
 
     protected function getMinimalConfiguration()
     {
         return [
-            'credentials' => [
-                'application_id' => 'asasa',
-                'search_key'     => 'sasa',
+            'client' => [
+                'application_id'  => 'asasa',
+                'application_key' => 'sasa',
             ],
             'indices' => [
                 'foo',

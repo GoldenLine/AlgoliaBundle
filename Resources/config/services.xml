@@ -4,17 +4,23 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
-    <!--
     <parameters>
-        <parameter key="goldenline_algolia.example.class">Goldenline\AlgoliaBundle\Example</parameter>
+        <parameter key="algoliasearch.client.class">AlgoliaSearch\Client</parameter>
+        <parameter key="algoliasearch.index.class">AlgoliaSearch\Index</parameter>
+        <parameter key="goldenline_algolia.index_factory">Goldenline\AlgoliaBundle\DependencyInjection\AlgoliaIndexFactory</parameter>
     </parameters>
 
     <services>
-        <service id="goldenline_algolia.example" class="%goldenline_algolia.example.class%">
-            <argument type="service" id="service_id" />
-            <argument>plain_value</argument>
-            <argument>%parameter_name%</argument>
+        <service id="goldenline_algolia.client_prototype" class="%algoliasearch.client.class%" abstract="true">
+            <argument /> <!-- Algolia Application Id -->
+            <argument /> <!-- Algolia Application Key -->
+            <argument /> <!-- Algolia Hosts -->
+        </service>
+
+        <service id="goldenline_algolia.index_prototype" class="algoliasearch.index.class" factory-class="goldenline_algolia.index_factory" factory-method="create" abstract="true">
+            <argument /> <!-- instance of goldenline_algolia.client_prototype service -->
+            <argument /> <!-- index name -->
         </service>
     </services>
-    -->
+
 </container>

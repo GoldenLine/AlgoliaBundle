@@ -1,7 +1,7 @@
 goldenline_algolia:
-    credentials:
+    client:
         application_id: 1212
-        search_key: 2731u31
+        application_key: 2731u31
     indices:
         - foo
         - bar
