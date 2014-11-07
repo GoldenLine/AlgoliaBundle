@@ -23,7 +23,7 @@ class ExtensionTest extends AbstractExtensionTestCase
     {
         $this->load();
 
-        $this->assertContainerBuilderHasService('goldenline_algolia.client');
+        $this->assertContainerBuilderHasService('goldenline_algolia.client','a');
         $this->assertContainerBuilderHasService('goldenline_algolia.index.foo');
         $this->assertContainerBuilderHasService('goldenline_algolia.index.bar');
         $this->assertContainerBuilderHasService('goldenline_algolia.index.users');

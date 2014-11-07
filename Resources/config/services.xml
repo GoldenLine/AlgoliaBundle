@@ -17,7 +17,7 @@
             <argument /> <!-- Algolia Hosts -->
         </service>
 
-        <service id="goldenline_algolia.index_prototype" class="%algoliasearch.index.class%" factory-class="goldenline_algolia.index_factory" factory-method="create" abstract="true">
+        <service id="goldenline_algolia.index_prototype" class="%algoliasearch.index.class%" factory-class="%goldenline_algolia.index_factory%" factory-method="create" abstract="true">
             <argument /> <!-- instance of goldenline_algolia.client_prototype service -->
             <argument /> <!-- index name -->
         </service>
