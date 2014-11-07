@@ -5,6 +5,7 @@ namespace Goldenline\AlgoliaBundle\DependencyInjection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Definition;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 
@@ -22,11 +23,15 @@ class GoldenlineAlgoliaExtension extends Extension
         $loader->load('services.xml');
 
         $this->createAlgoliaClient($container, $config);
+
+        if (isset($config['indices'])) {
+            $this->createAlgoliaIndices($container, $config['indices']);
+        }
     }
 
     /**
-     * @param ContainerBuilder $container
      * @param $config
+     * @param ContainerBuilder $container
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
      */
@@ -41,7 +46,34 @@ class GoldenlineAlgoliaExtension extends Extension
         $algoliaClient = new Definition('AlgoliaSearch\Client');
         $algoliaClient->addArgument($config['credentials']['application_id']);
         $algoliaClient->addArgument($config['credentials']['search_key']);
+        if (isset($config['credentials']['hosts'])) {
+            $algoliaClient->addArgument($config['credentials']['hosts']);
+        }
 
         $container->setDefinition('goldenline.algolia.client', $algoliaClient);
+    }
+
+    /**
+     * @param ContainerBuilder $container
+     * @param array $indices
+     * @throws \RuntimeException
+     */
+    private function createAlgoliaIndices(ContainerBuilder $container, array $indices)
+    {
+        if (!class_exists('AlgoliaSearch\Index')) {
+            throw new \RuntimeException(
+                'You must require "algolia/algoliasearch-client-php" to use the Algolia Bundle.'
+            );
+        }
+
+        foreach ($indices as $index) {
+            $algoliaIndex = new Definition('AlgoliaSearch\Index');
+            $algoliaIndex->setFactoryClass('Goldenline\AlgoliaBundle\DependencyInjection\AlgoliaIndexFactory');
+            $algoliaIndex->setFactoryMethod('create');
+            $algoliaIndex->addArgument(new Reference('goldenline.algolia.client'));
+            $algoliaIndex->addArgument($index);
+
+            $container->setDefinition(sprintf('goldenline.algolia.index.%s', $index), $algoliaIndex);
+        }
     }
 }

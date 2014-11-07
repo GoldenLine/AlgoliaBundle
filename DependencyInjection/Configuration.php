@@ -28,7 +28,13 @@ class Configuration implements ConfigurationInterface
                             ->isRequired()
                             ->cannotBeEmpty()
                         ->end()
+                        ->arrayNode('hosts')
+                            ->prototype('scalar')->cannotBeEmpty()->end()
+                        ->end()
                     ->end()
+                ->end()
+                ->arrayNode('indices')
+                    ->prototype('scalar')->cannotBeEmpty()->end()
                 ->end()
             ->end()
         ;
