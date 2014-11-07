@@ -2,3 +2,6 @@ goldenline_algolia:
     credentials:
         application_id: 1212
         search_key: 2731u31
+    indices:
+        - foo
+        - bar
