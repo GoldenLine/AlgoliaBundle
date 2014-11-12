@@ -27,8 +27,10 @@ public function registerBundles()
 }
 ```
 
-Finally add your sources:
+Finally add your configuration:
 ```yml
+// app/config/config.yml
+
 goldenline_algolia:
     client:
         application_id: <your_application_id>
@@ -37,6 +39,8 @@ goldenline_algolia:
         - foo
         - bar
 ```
+
+Currently we don`t support XML configuration.
 
 Usage
 -----
@@ -47,6 +51,8 @@ Get your index from container i.e.:
   $this->getContainer()->get('goldenline_algolia.index.foo');
 ```
 and use it according to https://github.com/algolia/algoliasearch-client-php#search documentation.
+
+You can also use client service located in container: `goldenline_algolia.client` according to https://github.com/algolia/algoliasearch-client-php
 
 License
 -------
