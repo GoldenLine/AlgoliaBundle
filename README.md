@@ -22,7 +22,7 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
-        new GoldenLine\ImgixBundle\GoldenLineAlgoliaBundle(),
+        new GoldenLine\AlgoliaBundle\GoldenLineAlgoliaBundle(),
     );
 }
 ```
