@@ -29,7 +29,7 @@ public function registerBundles()
 
 Finally add your configuration:
 ```yml
-// app/config/config.yml
+# app/config/config.yml
 
 goldenline_algolia:
     client:
