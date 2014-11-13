@@ -36,8 +36,10 @@ goldenline_algolia:
         application_id: <your_application_id>
         application_key: <your_application_key>
     indices:
-        - foo
-        - bar
+        foo:
+            name: prefix_foo
+        bar:
+            name: bar
 ```
 
 Currently we don`t support XML configuration.
