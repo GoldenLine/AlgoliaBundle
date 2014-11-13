@@ -6,7 +6,7 @@ use AlgoliaSearch\Client;
 
 class AlgoliaIndexFactory
 {
-    public function create(Client $client, $index)
+    public static function create(Client $client, $index)
     {
         return $client->initIndex($index);
     }
