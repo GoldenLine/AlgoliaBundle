@@ -34,7 +34,11 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
                 ->arrayNode('indices')
-                    ->prototype('scalar')->cannotBeEmpty()->end()
+                    ->prototype('array')
+                        ->children()
+                            ->scalarNode('name')->isRequired()->end()
+                        ->end()
+                    ->end()
                 ->end()
             ->end()
         ;

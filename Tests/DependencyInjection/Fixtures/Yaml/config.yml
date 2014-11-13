@@ -3,5 +3,7 @@ goldenline_algolia:
         application_id: 1212
         application_key: 2731u31
     indices:
-        - foo
-        - bar
+        foo:
+            name: prefix_foo_index
+        bar:
+            name: bar_index

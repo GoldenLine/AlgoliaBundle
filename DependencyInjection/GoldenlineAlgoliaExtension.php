@@ -49,10 +49,10 @@ class GoldenlineAlgoliaExtension extends Extension
      */
     private function loadIndices(array $indices, ContainerBuilder $container)
     {
-        foreach ($indices as $index) {
+        foreach ($indices as $index => $values) {
             $indexDef = new DefinitionDecorator('goldenline_algolia.index_prototype');
             $indexDef->replaceArgument(0, new Reference('goldenline_algolia.client'));
-            $indexDef->replaceArgument(1, $index);
+            $indexDef->replaceArgument(1, $values['name']);
 
             $indexId = sprintf('goldenline_algolia.index.%s', $index);
 

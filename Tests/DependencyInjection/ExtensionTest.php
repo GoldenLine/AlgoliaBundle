@@ -37,9 +37,15 @@ class ExtensionTest extends AbstractExtensionTestCase
                 'application_key' => 'sasa',
             ],
             'indices' => [
-                'foo',
-                'bar',
-                'users',
+                'foo' => [
+                    'name' => 'prefix_foo_index'
+                ],
+                'bar' => [
+                    'name' => 'bar_index'
+                ],
+                'users' => [
+                    'name' => 'dev_users_index'
+                ],
             ]
         ];
     }
