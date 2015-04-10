@@ -1,6 +1,8 @@
 AlgoliaBundle
 =============
 
+[![Dependency Status](https://www.versioneye.com/user/projects/55278b312ced4ffffe00061f/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55278b312ced4ffffe00061f)
+
 Integrates Algolia into Symfony
 
 Installation
