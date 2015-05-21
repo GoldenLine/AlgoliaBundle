@@ -24,7 +24,7 @@ public function registerBundles()
 {
     $bundles = array(
         // ...
-        new GoldenLine\AlgoliaBundle\GoldenLineAlgoliaBundle(),
+        new Goldenline\AlgoliaBundle\GoldenlineAlgoliaBundle(),
     );
 }
 ```
