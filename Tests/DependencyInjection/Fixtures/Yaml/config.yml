@@ -1,9 +1,13 @@
 goldenline_algolia:
     client:
-        application_id: 1212
-        application_key: 2731u31
+        default_client:
+            application_id: 1212
+            application_key: 2731u31
+            default: true
     indices:
         foo:
             name: prefix_foo_index
+            client: default_client
         bar:
             name: bar_index
+            client: default_client

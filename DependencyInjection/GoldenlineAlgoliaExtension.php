@@ -22,7 +22,10 @@ class GoldenlineAlgoliaExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.xml');
 
-        $this->loadClient($config['client'], $container);
+        foreach ($config['client'] as $name => $client) {
+            $this->loadClient($client, $name, $container);
+        }
+
 
         if (isset($config['indices'])) {
             $this->loadIndices($config['indices'], $container);
@@ -30,17 +33,30 @@ class GoldenlineAlgoliaExtension extends Extension
     }
 
     /**
-     * @param array $client application credentials
+     * @param array            $client application credentials
+     * @param string           $name
      * @param ContainerBuilder $container
+     *
+     * @throws \Exception
      */
-    private function loadClient(array $client, ContainerBuilder $container)
+    private function loadClient(array $client, $name, ContainerBuilder $container)
     {
         $clientDef = new DefinitionDecorator('goldenline_algolia.client_prototype');
         $clientDef->replaceArgument(0, $client['application_id']);
         $clientDef->replaceArgument(1, $client['application_key']);
         $clientDef->replaceArgument(2, $client['hosts']);
 
-        $container->setDefinition('goldenline_algolia.client', $clientDef);
+        $clientName = sprintf('goldenline_algolia.client.%s', $name);
+        $container->setDefinition($clientName, $clientDef);
+
+        // ustawienie aliasu dla `default`
+        if (true === (bool) $client['default']) {
+            if ($container->hasAlias('goldenline_algolia.client')) {
+                throw new \Exception('Only one service should be set as `default`');
+            }
+
+            $container->setAlias('goldenline_algolia.client', $clientName);
+        }
     }
 
     /**
@@ -51,7 +67,7 @@ class GoldenlineAlgoliaExtension extends Extension
     {
         foreach ($indices as $index => $values) {
             $indexDef = new DefinitionDecorator('goldenline_algolia.index_prototype');
-            $indexDef->replaceArgument(0, new Reference('goldenline_algolia.client'));
+            $indexDef->replaceArgument(0, new Reference(sprintf('goldenline_algolia.client.%s', $values['client'])));
             $indexDef->replaceArgument(1, $values['name']);
 
             $indexId = sprintf('goldenline_algolia.index.%s', $index);
